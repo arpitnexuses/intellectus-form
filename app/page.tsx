@@ -1,103 +1,178 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import type React from "react"
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
+import { ArrowRight } from "lucide-react"
+import { useState } from "react"
+
+export default function InternshipPage() {
+  const [file, setFile] = useState<File | null>(null)
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0])
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    // Handle form submission
+    console.log("Form submitted")
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-[#f5f5f5]">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 py-12 lg:grid-cols-2 lg:gap-16 lg:px-12">
+        {/* Left Content Section */}
+        <div className="space-y-8">
+          <div>
+            <h1 className="mb-8 text-5xl font-bold text-foreground">Careers</h1>
+            <p className="mb-4 text-muted-foreground">Are you interested in helping innovators change the world?</p>
+            <p className="text-muted-foreground">
+              If you are smart, intellectually curious, empathetic and have a drive to help good people achieve
+              incredible outcomes, we&#39;d like to hear from you.
+            </p>
+          </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          <div>
+            <h2 className="mb-6 text-3xl font-semibold text-foreground">Our Internship Program</h2>
+            <div className="space-y-4 text-muted-foreground">
+              <p>
+                Our internship opportunities are aimed at high-performing university students and postgraduates
+                interested in a career in investment banking. At Intellectus Capital, you will gain direct exposure to
+                M&A and corporate advisory through intensive, hands-on work that builds technical and commercial skills.
+              </p>
+              <p>
+                From day one, you will work on live transactions and gain direct experience in financial analysis,
+                modelling, and deal execution. Working closely with our Managing Director and senior team, you will
+                experience the pace and intensity of real advisory work. We recruit interns on a rolling basis and
+                encourage early applications.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-xl font-semibold text-foreground">Purpose</h3>
+            <p className="text-muted-foreground">
+              The internship gives you the chance to explore the world of corporate finance, understand the work we do,
+              and accelerate your career ambitions. It is also our way of getting to know the next generation of
+              talented professionals who may go on to become future leaders of the firm. Along the way, you will build
+              lasting connections with peers and colleagues.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-xl font-semibold text-foreground">Training and Development</h3>
+            <p className="text-muted-foreground">
+              You will receive training in financial modelling, valuation and deal execution, combined with one-on-one
+              mentoring from senior professionals. Throughout your time with us, you will be supported with feedback,
+              guidance and opportunities to develop both technical expertise and professional confidence.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-xl font-semibold text-foreground">What We Look For</h3>
+            <p className="text-muted-foreground">
+              We welcome applicants from finance, law, technology, humanities and other disciplines. Strong analytical
+              skills, curiosity and ambition are essential. Academic excellence is highly valued, alongside critical
+              thinking, clear communication and the ability to work well in a team.
+            </p>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Right Form Section */}
+        <div className="lg:pt-32">
+          <div className="rounded-lg bg-white p-8 shadow-sm">
+            <h2 className="mb-8 text-xl text-foreground">
+              To apply, please complete the form below and attach your CV and Cover Letter.
+            </h2>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="firstName" className="text-xs font-medium uppercase text-muted-foreground">
+                    First Name
+                  </Label>
+                  <Input id="firstName" placeholder="First name" className="border-input bg-background" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="lastName" className="text-xs font-medium uppercase text-muted-foreground">
+                    Last Name
+                  </Label>
+                  <Input id="lastName" placeholder="Last name" className="border-input bg-background" required />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-xs font-medium uppercase text-muted-foreground">
+                  Email Address
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Email address"
+                  className="border-input bg-background"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="phone" className="text-xs font-medium uppercase text-muted-foreground">
+                  Phone Number
+                </Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="Phone number"
+                  className="border-input bg-background"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="message" className="text-xs font-medium uppercase text-muted-foreground">
+                  Message
+                </Label>
+                <Textarea
+                  id="message"
+                  placeholder="Write a cover letter or upload"
+                  className="min-h-[200px] resize-none border-input bg-background"
+                  required
+                />
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <input
+                    type="file"
+                    id="file-upload"
+                    className="hidden"
+                    onChange={handleFileChange}
+                    accept=".pdf,.doc,.docx"
+                  />
+                  <Button
+                    type="button"
+                    onClick={() => document.getElementById("file-upload")?.click()}
+                    className="bg-[#4285f4] text-white hover:bg-[#3367d6]"
+                  >
+                    Choose a file
+                  </Button>
+                  {file && <p className="mt-2 text-sm text-muted-foreground">Selected: {file.name}</p>}
+                </div>
+
+                <Button type="submit" className="bg-[#1a1a1a] text-white hover:bg-[#2a2a2a]">
+                  Submit
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-  );
+  )
 }

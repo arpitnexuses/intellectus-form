@@ -6,11 +6,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, CheckCircle, AlertCircle } from "lucide-react"
 import { useState } from "react"
 
 export default function InternshipPage() {
   const [file, setFile] = useState<File | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -18,10 +21,91 @@ export default function InternshipPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Handle form submission
-    console.log("Form submitted")
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+    setErrorMessage('')
+
+    try {
+      const formData = new FormData()
+      const form = e.currentTarget
+      
+      // Get form values
+      const firstName = (form.querySelector('#firstName') as HTMLInputElement)?.value?.trim()
+      const lastName = (form.querySelector('#lastName') as HTMLInputElement)?.value?.trim()
+      const email = (form.querySelector('#email') as HTMLInputElement)?.value?.trim()
+      const phone = (form.querySelector('#phone') as HTMLInputElement)?.value?.trim()
+      const message = (form.querySelector('#message') as HTMLTextAreaElement)?.value?.trim()
+
+      // Client-side validation
+      if (!firstName || !lastName || !email || !phone || !message) {
+        setSubmitStatus('error')
+        setErrorMessage('All fields are required')
+        setIsSubmitting(false)
+        return
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(email)) {
+        setSubmitStatus('error')
+        setErrorMessage('Please enter a valid email address')
+        setIsSubmitting(false)
+        return
+      }
+
+      // Phone validation (basic)
+      const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/
+      if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
+        setSubmitStatus('error')
+        setErrorMessage('Please enter a valid phone number')
+        setIsSubmitting(false)
+        return
+      }
+
+      // File validation
+      if (file && file.size > 10 * 1024 * 1024) { // 10MB limit
+        setSubmitStatus('error')
+        setErrorMessage('File size must be less than 10MB')
+        setIsSubmitting(false)
+        return
+      }
+
+      // Add form data
+      formData.append('firstName', firstName)
+      formData.append('lastName', lastName)
+      formData.append('email', email)
+      formData.append('phone', phone)
+      formData.append('message', message)
+      
+      // Add file if selected
+      if (file) {
+        formData.append('file', file)
+      }
+
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        // Reset form
+        form.reset()
+        setFile(null)
+      } else {
+        setSubmitStatus('error')
+        setErrorMessage(result.error || 'An error occurred')
+      }
+    } catch (error) {
+      setSubmitStatus('error')
+      setErrorMessage('Network error. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -90,6 +174,21 @@ export default function InternshipPage() {
             <h2 className="mb-8 text-xl text-foreground">
               To apply, please complete the form below and attach your CV and Cover Letter.
             </h2>
+
+            {/* Status Messages */}
+            {submitStatus === 'success' && (
+              <div className="mb-6 flex items-center gap-2 rounded-lg bg-green-50 p-4 text-green-800">
+                <CheckCircle className="h-5 w-5" />
+                <p>Application submitted successfully! We'll get back to you soon.</p>
+              </div>
+            )}
+
+            {submitStatus === 'error' && (
+              <div className="mb-6 flex items-center gap-2 rounded-lg bg-red-50 p-4 text-red-800">
+                <AlertCircle className="h-5 w-5" />
+                <p>{errorMessage}</p>
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -164,8 +263,12 @@ export default function InternshipPage() {
                   {file && <p className="mt-2 text-sm text-muted-foreground">Selected: {file.name}</p>}
                 </div>
 
-                <Button type="submit" className="bg-[#1a1a1a] text-white hover:bg-[#2a2a2a]">
-                  Submit
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="bg-[#1a1a1a] text-white hover:bg-[#2a2a2a] disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? 'Submitting...' : 'Submit'}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>

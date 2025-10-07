@@ -1,0 +1,42 @@
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a2a2a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="200" height="60" fill="url(#logoGradient)" rx="8"/>
+  
+  <!-- Letter I -->
+  <rect x="20" y="15" width="8" height="30" fill="#4285f4"/>
+  <rect x="16" y="15" width="16" height="4" fill="#4285f4"/>
+  <rect x="16" y="41" width="16" height="4" fill="#4285f4"/>
+  
+  <!-- Letter N -->
+  <rect x="40" y="15" width="6" height="30" fill="white"/>
+  <rect x="40" y="15" width="20" height="6" fill="white"/>
+  <rect x="54" y="15" width="6" height="30" fill="white"/>
+  
+  <!-- Letter T -->
+  <rect x="70" y="15" width="20" height="6" fill="white"/>
+  <rect x="78" y="15" width="6" height="30" fill="white"/>
+  
+  <!-- Letter E -->
+  <rect x="100" y="15" width="6" height="30" fill="white"/>
+  <rect x="100" y="15" width="16" height="6" fill="white"/>
+  <rect x="100" y="27" width="12" height="6" fill="white"/>
+  <rect x="100" y="39" width="16" height="6" fill="white"/>
+  
+  <!-- Letter L -->
+  <rect x="125" y="15" width="6" height="30" fill="white"/>
+  <rect x="125" y="39" width="16" height="6" fill="white"/>
+  
+  <!-- Letter L -->
+  <rect x="150" y="15" width="6" height="30" fill="white"/>
+  <rect x="150" y="39" width="16" height="6" fill="white"/>
+  
+  <!-- Subtitle -->
+  <text x="100" y="55" font-family="Arial, sans-serif" font-size="8" fill="#cccccc" text-anchor="middle">CAPITAL</text>
+</svg>
